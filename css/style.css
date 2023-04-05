@@ -25,7 +25,6 @@ body {
 	line-height: 1.2;
 	margin: 0;
 	padding: 0;
-	background-color: #f2f3f4;
 }
 
 input,
@@ -124,7 +123,8 @@ body {
 .header {
 	width: 100%;
 	border-bottom: 1px solid #dcdcdc;
-	background-color: white;
+	background-color: #0f4c81;
+	color: white;
 }
 
 .header__container {
@@ -165,7 +165,7 @@ body {
 }
 
 .auth__menu button {
-	background-color: #0084c4;
+	background-color: #ffa500;
 	color: white;
 	padding: 0.6rem 0.9rem;
 	border-radius: 0.8rem;
@@ -191,7 +191,7 @@ body {
 }
 
 .hero span {
-	color: #0084c4;
+	color: #ffa500;
 }
 
 .hero p {
@@ -203,7 +203,7 @@ body {
 
 .goal {
 	margin-top: 6rem;
-	background-color: #0084c4;
+	background-color: #0f4c81;
 	color: white;
 	padding: 7rem 0;
 }
@@ -286,7 +286,7 @@ body {
 .connect button {
 	width: max-content;
 	padding: 0.6rem 0.9rem;
-	background-color: #0084c4;
+	background-color: #ffa500;
 	border-radius: 0.8rem;
 	color: white;
 	font-size: 1.6rem;
@@ -421,4 +421,42 @@ body {
 
 .success {
 	background-color: green;
+}
+
+.vacancy__buttons {
+	margin-top: 5rem;
+	width: max-content;
+	border: 1px solid black;
+	border-radius: 0.8rem;
+	margin-bottom: 5rem;
+}
+
+.buttonCheck {
+	background-color: #ffa500;
+	color: white;
+	border-radius: 0.8rem;
+	border: none;
+}
+
+.vacancy__buttons button {
+	padding: 1rem;
+}
+
+.table__container {
+	width: 100%;
+}
+
+.vacancy__table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.vacancy__table a {
+	color: blue;
+}
+
+th,
+td {
+	border: 1px solid gray;
+	padding: 1rem;
 }
