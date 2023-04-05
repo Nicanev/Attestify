@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/style.css" />
+		<title>Attestify</title>
+	</head>
+	<body>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<div class="wrapper" id="app">
+			<header class="header">
+				<div class="header__container">
+					<div class="header__left">
+						<a href="index.html">
+							<img src="img/logo.svg" alt="logo" class="header__logo" />
+						</a>
+						<ul class="header__menu">
+							<li><a href="index.html">Главная</a></li>
+							<li><a href="news.html">Новости</a></li>
+							<li><a href="contact.html">Контакты</a></li>
+						</ul>
+					</div>
+					<div class="header__right">
+						<div class="auth__menu">
+							<a href="login.html">Войти</a>
+							<a href="register.html"><button>Регистрация</button></a>
+						</div>
+					</div>
+				</div>
+			</header>
+			<main class="main">
+				<div class="hero">
+					<div class="hero__container">
+						<div class="hero__text">
+							<h1>
+								<span>Аттестация преподавателей - </span>проще, быстрее,
+								эффективнее!
+							</h1>
+							<p>
+								Начните использовать наш портал прямо сейчас и упростите процесс
+								прохождения аттестации!
+							</p>
+							<div class="auth__menu">
+								<a href="register.html"><button>Регистрация</button></a>
+								<a href="login.html">Войти</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="goal">
+					<div class="goal__container">
+						<h2>Наша цель</h2>
+						<p>
+							Нашей целью является упрощение процесса аттестации для
+							преподавателей и повышение качества образования для студентов. На
+							портале преподаватели могут быстро и удобно заполнить анкету для
+							прохождения аттестации, загрузить необходимые документы и получить
+							информацию о процессе аттестации. Администраторы могут управлять
+							процессом аттестации, просматривать статусы заполненных анкет и
+							документов, а также выдавать сертификаты об успешной аттестации.
+							Пользовательский интерфейс портала прост и интуитивно понятен, что
+							делает его удобным в использовании для всех пользователей.
+						</p>
+					</div>
+				</div>
+				<div class="news">
+					<div class="news__container">
+						<h2>Новости</h2>
+						<ul class="news__list" v-if="news == null">
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+						</ul>
+						<ul class="news__list" v-if="news">
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+							<li class="news__item">
+								<img src="img/news-1.png" alt="news" />
+								<p>
+									Запущен новый портал Attestify для упрощения процесса
+									аттестации преподавателей
+								</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="connect">
+					<div class="connect__container">
+						<h2>Связь с нами</h2>
+						<p>Свяжитесь с нами и получите помощь от нашей поддержки</p>
+						<form v-on:submit.prevent="sendAppeal">
+							<input
+								v-model="email"
+								type="email"
+								placeholder="Почта"
+								required
+							/>
+							<input v-model="name" type="text" placeholder="Имя" required />
+							<input
+								v-model="message"
+								type="text"
+								placeholder="Сообщение"
+								required
+							/>
+							<button>Отправить</button>
+						</form>
+					</div>
+				</div>
+			</main>
+			<footer class="footer">
+				<div class="footer__copyright">
+					@ Attestify 2023 - Все права защищены
+				</div>
+			</footer>
+		</div>
+		<script>
+			const { createApp } = Vue;
+
+			createApp({
+				data() {
+					return {
+						news: null,
+						name: "",
+						email: "",
+						message: "",
+					};
+				},
+				mounted() {
+					let url = "http://attestify/public/api/news";
+					let response = fetch(url);
+
+					let news = response.json();
+
+					if (news != null) {
+						this.news = news;
+					}
+				},
+				methods: {
+					sendAppeal() {
+						let appeal = {
+							name: this.name,
+							email: this.email,
+							message: this.message,
+						};
+						let url = "http://attestify/public/api/setAppeal";
+						let response = fetch(url, {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json;charset=utf-8",
+							},
+							body: JSON.stringify(appeal),
+						});
+						alert("Обращение было отправлено!");
+					},
+				},
+			}).mount("#app");
+		</script>
+	</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/style.css" />
+		<title>Профиль</title>
+	</head>
+	<body>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<div class="wrapper" id="app">
+			<header class="header">
+				<div class="header__container">
+					<div class="header__left">
+						<a href="index.html">
+							<img src="img/logo.svg" alt="logo" class="header__logo" />
+						</a>
+						<ul class="header__menu">
+							<li><a href="index.html">Главная</a></li>
+							<li><a href="news.html">Новости</a></li>
+							<li><a href="contact.html">Контакты</a></li>
+						</ul>
+					</div>
+					<div class="header__right">
+						<div class="auth__menu">
+							<a href="login.html">Войти</a>
+							<a href="register.html"><button>Регистрация</button></a>
+						</div>
+					</div>
+				</div>
+			</header>
+			<main class="main">
+				<div class="profile">
+					<div class="profile__container">
+						<h1>Профиль</h1>
+						<div class="profile__login">Добро пожаловать, Дмитрий Митяев!</div>
+						<div class="profile__attestation attestation">
+							<h2>Ваши аттестации</h2>
+							<ul class="attestation__list">
+								<li class="attestation__item">
+									<img src="img/news-1.png" alt="Аттестация" />
+									<p>Аттестация по математике</p>
+									<button class="success">Пройдено</button>
+								</li>
+								<li class="attestation__item">
+									<img src="img/news-1.png" alt="Аттестация" />
+									<p>Аттестация по информатике</p>
+									<button>Пройти аттестацию</button>
+								</li>
+								<li class="attestation__item">
+									<img src="img/news-1.png" alt="Аттестация" />
+									<p>Аттестация по русскому языку</p>
+									<button>Пройти аттестацию</button>
+								</li>
+								<li class="attestation__item">
+									<img src="img/news-1.png" alt="Аттестация" />
+									<p>Аттестация по английскому языку</p>
+									<button>Пройти аттестацию</button>
+								</li>
+							</ul>
+						</div>
+						<div class="profile__exit">
+							<h3>Выйти из аккаунта</h3>
+							<a href="index.html"> <button>Выйти</button></a>
+						</div>
+					</div>
+				</div>
+			</main>
+			<footer class="footer">
+				<div class="footer__copyright">
+					@ Attestify 2023 - Все права защищены
+				</div>
+			</footer>
+		</div>
+
+		<script>
+			const { createApp } = Vue;
+
+			createApp({
+				data() {
+					return {
+						isAuth: false,
+						first_name: "test",
+						last_name: "test",
+						attestations: null,
+					};
+				},
+				mounted() {
+					if (document.cookie) {
+						let url = "http://attestify/public/api/getUser";
+						let response = fetch(url);
+
+						let first_name = response.json().first_name;
+						let last_name = response.json().last_name;
+
+						if (login != null) {
+							this.first_name = first_name;
+							this.last_name = last_name;
+						}
+						let url2 = "http://attestify/public/api/attestations";
+						let response2 = fetch(url);
+
+						let attestations = response.json();
+
+						if (attestations != null) {
+							this.attestations = attestations;
+						}
+						this.isAuth = true;
+					} else {
+						window.location.href = "index.html";
+					}
+				},
+				methods: {
+					getAttestation(id) {
+						let code = {
+							code: document.cookie,
+							id: id,
+						};
+						let url = "http://attestify/public/api/getAttestation";
+						let response = fetch(url, {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json;charset=utf-8",
+							},
+							body: JSON.stringify(code),
+						});
+						if (response.OK) {
+							console.log("success");
+						} else {
+							alert("Что-то пошло не так");
+						}
+					},
+				},
+			}).mount("#app");
+		</script>
+	</body>
+</html>
